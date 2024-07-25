@@ -19,13 +19,7 @@ Internal phosphorus loading (IPL) can be a significant source of phosphorus (P) 
 
 - [About the Project](#about-the-project)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
+- [Running Codes](#Running Codes)
 
 ## About The Project
 
@@ -84,6 +78,7 @@ For detailed guides and additional resources on installing and using R and RStud
 - [Hands-On Programming with R: Installing R and RStudio](https://rstudio-education.github.io/hopr/a-intro.html)
 
 These guides provide comprehensive instructions and helpful visuals to ensure a smooth installation process.
-### Prerequisites
+
+## Running Codes
 
 
