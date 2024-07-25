@@ -90,7 +90,7 @@ BT.rf.mod.per
 # Final model----
 set.seed(125)
 
-## Developing the model again
+## Developing the model
 BT.rf.mod1 <- randomForest(
   formula = TEMPERATURE ~ DEPTH + Aream2 + AvgSummTemp_C + EcoRegion,
   data = Train.BT.df1[,pred.vars],
@@ -102,6 +102,19 @@ BT.rf.mod1 <- randomForest(
 )
 
 BT.rf.mod1
+
+## Same model for quantile regression
+set.seed(125)
+BT.rf.mod2 <- quantregForest( Train.BT.df1[,pred.vars1],
+                              Train.BT.df1[, "TEMPERATURE"],
+                              keep.inbag = T,
+                              ntree = 1000,
+                              mtry = 3,
+                              importance = T,
+                              do.trace = 100,
+                              nodesize = 10)
+
+BT.rf.mod2
 
 # Cross-validation----
 ## number of folds

@@ -93,7 +93,7 @@ TP.rf.mod.per
 # Final model----
 set.seed(329)
 
-# Developing the model again
+## Developing the model
 TP.rf.mod1 <- randomForest(
   formula = avgTP_mugL ~ .,
   data = Train.TP.df1[,pred.vars],
@@ -105,6 +105,19 @@ TP.rf.mod1 <- randomForest(
 )
 
 TP.rf.mod1
+
+## Same model for quantile regression
+set.seed(329)
+TP.rf.mod2 <- quantregForest( Train.TP.df1[,pred.vars[which(pred.vars != "avgTP_mugL")]],
+                              Train.TP.df1[, "avgTP_mugL"],
+                              keep.inbag = T,
+                              ntree = 1000,
+                              mtry = 5,
+                              importance = T,
+                              do.trace = 100,
+                              nodesize = 10)
+
+TP.rf.mod2
 
 # Cross-validation----
 ## number of folds
