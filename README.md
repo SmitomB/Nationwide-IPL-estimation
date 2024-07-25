@@ -29,14 +29,61 @@ Internal phosphorus loading (IPL) can be a significant source of phosphorus (P) 
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a brief introduction to your project. Explain what it does, why it's useful, and its features.
+In this project, we provide the data and models developed as a part of our study to predict IPL in large lakes and reservoirs across the US. Additionally, codes for nationwide IPL, BT and TP predictions along with uncertainty quantification are provided. 
 
 ## Getting Started
 
-This section explains how to get started with your project.
+The codes in this project are developed in R environment. To install and run R and RStudio on your computer, follow these steps:
 
+### Installing R
+
+1. **Download R:**
+   - Visit the [CRAN website](https://cran.r-project.org/).
+   - Select your operating system: Windows, macOS, or Linux.
+   - Click on the appropriate link to download the R installer.
+
+2. **Install R on Windows:**
+   - Click on "Download R for Windows" and then on "base."
+   - Download the latest version of R by clicking the link at the top of the new page.
+   - Run the downloaded `.exe` file and follow the installation wizard steps.
+
+3. **Install R on macOS:**
+   - Click on "Download R for macOS."
+   - Download the `.pkg` file for the latest version of R.
+   - Run the `.pkg` file and follow the installation instructions.
+
+### Installing RStudio
+
+1. **Download RStudio:**
+   - Go to the [RStudio website](https://www.rstudio.com/products/rstudio/download/).
+   - Click on "DOWNLOAD" under the RStudio Desktop section.
+
+2. **Install RStudio:**
+   - Download the installer for your operating system (Windows `.exe` or macOS `.dmg`).
+   - Run the installer and follow the installation prompts.
+
+### Running R and RStudio
+
+1. **Open RStudio:**
+   - After installation, open RStudio from your Start menu (Windows) or Applications folder (macOS).
+
+2. **Set Up RStudio:**
+   - The RStudio interface consists of multiple panes: Source, Console, Environment, and Files/Plots/Packages/Help.
+   - You can write R scripts in the Source pane and execute them in the Console.
+
+3. **Install and Load Packages:**
+   - Install packages using `install.packages("packageName")`.
+   - Load packages using `library(packageName)`.
+
+### Additional Resources
+
+For detailed guides and additional resources on installing and using R and RStudio, you can refer to these tutorials:
+
+- [Dataquest: Downloading and Installing R](https://www.dataquest.io/blog/installing-r-on-your-computer/)
+- [Stats and R: How to install R and RStudio](https://statsandr.com/blog/how-to-install-r-and-rstudio/)
+- [Hands-On Programming with R: Installing R and RStudio](https://rstudio-education.github.io/hopr/a-intro.html)
+
+These guides provide comprehensive instructions and helpful visuals to ensure a smooth installation process.
 ### Prerequisites
 
 
