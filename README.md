@@ -1,11 +1,16 @@
 <h1 align="center">Quantifying Internal Phosphorus Loading in Large Lakes and Reservoirs across the United States</h1>
 
 <p align="center">
-  <strong>Smitom S. Borah</strong>
-  <strong>Natalie G. Nelson</strong>
-  <strong>Owen W. Duckworth</strong>
-  <strong> Daniel R. Obenour</strong>
+  <strong>Smitom S. Borah<sup>1</sup>, Natalie G. Nelson<sup>2</sup>, Owen W. Duckworth<sup>3</sup></strong> , Daniel R. Obenour<sup>4</sup></strong>
 </p>
+
+<p align="center">
+  <sup>1</sup>Affiliation 1<br>
+  <sup>2</sup>Affiliation 2<br>
+  <sup>3</sup>Affiliation 3
+</p>
+
+
 # Project Title
 
 A brief description of what this project does and who it's for.
