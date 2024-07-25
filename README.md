@@ -19,7 +19,7 @@ Internal phosphorus loading (IPL) can be a significant source of phosphorus (P) 
 
 - [About the Project](#about-the-project)
 - [Getting Started](#getting-started)
-- [Running Codes](#Running Codes)
+- [Running Codes](#Running-Codes)
 
 ## About The Project
 
