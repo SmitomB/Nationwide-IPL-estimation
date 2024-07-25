@@ -23,7 +23,7 @@ Internal phosphorus loading (IPL) can be a significant source of phosphorus (P) 
 
 ## About The Project
 
-In this project, we provide the data and models developed as a part of our study to predict IPL in large lakes and reservoirs across the US. Additionally, codes for nationwide IPL, BT and TP predictions along with uncertainty quantification are provided. 
+In this project, we provide the data and models developed as a part of our study to predict IPL in large lakes and reservoirs across the US. Additionally, codes for nationwide IPL, BT and TP predictions along with uncertainty quantification are provided. The data needed to run the codes are stored in *Datafiles* folder and the codes are stored in *Codes* folder.
 
 ## Getting Started
 
