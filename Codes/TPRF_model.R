@@ -1,7 +1,7 @@
-# Title: Randomforest model for bottom temperature prediction
+# Title: Randomforest model for total phosphorus prediction
 
 # Description----
-# Here we provide the codes to develop the regression random forest model for bottom temperature prediction.
+# Here we provide the codes to develop the regression random forest model for total phosphorus prediction.
 
 # Loading pacakages----
 my_packages <- c("tidyverse", "rgeos", "rgdal", "sp", "raster", "lubridate",
@@ -9,33 +9,36 @@ my_packages <- c("tidyverse", "rgeos", "rgdal", "sp", "raster", "lubridate",
 lapply(my_packages,library, character.only = T)
 
 # Loading data----
-BT.df1 <- readRDS("Datafiles/BT.predictors.RDS")
-
+TP.df1 <- readRDS("Datafiles/TP.predictors.RDS")
 
 # Preparing the training data----
 ## Training data
-Train.BT.df1 <- BT.df1
+### Making log transformation
+TP.df1$avgTP_mugL <- log(TP.df1$avgTP_mugL)
+Train.TP.df1 <- TP.df1
 
 ### summary of the training data
-plot(density(Train.BT.df1$TEMPERATURE)) # histogram
+plot(density(Train.TP.df1$avgTP_mugL)) # histogram
 
-summary(Train.BT.df1$TEMPERATURE) # summary
+summary(Train.TP.df1$avgTP_mugL) # summary
 
-quantile(Train.BT.df1$TEMPERATURE, probs = c(0.1, 0.25, 0.5, 0.75, 0.9)) # Quantiles
+quantile(Train.TP.df1$avgTP_mugL, probs = c(0.1, 0.25, 0.5, 0.75, 0.9)) # Quantiles
 
 
 ## Response variable and Predictors
-pred.vars <- c("TEMPERATURE", "DEPTH", "Aream2","AvgSummTemp_C", "EcoRegion")
-pred.vars1 <- c("DEPTH", "Aream2","AvgSummTemp_C", "EcoRegion")
-
+pred.vars <- c("avgTP_mugL", "EcoRegion",
+               "DEPTH", "Water_cover", "AvgSummPrec_mm", "AvgSummTemp_C",
+               "Dev_cover", "Barren_cover", "For_cover",
+               "Shrub_cover", "Herb_cover", "Cult_cover",
+               "Wetland_cover", "Aream2", "ws_lake_arearatio")
 
 # Hyperparameter tuning----
 ## Different mtry values
-mtry.vec <- c(2,3,4)
+mtry.vec <- seq(3,12,1)
 
 ## to store the models and model performance
-BT.rf.mod.lst <- list()
-BT.rf.mod.per <- data.frame()
+TP.rf.mod.lst <- list()
+TP.rf.mod.per <- data.frame()
 
 ## Defining function
 VarExp <- function(mod,obs)
@@ -48,12 +51,12 @@ VarExp <- function(mod,obs)
 for (i in 1:length(mtry.vec)){
   
   # Setting seed
-  set.seed(123+i)
+  set.seed(326+i)
   
   # training model
-  BT.rf.mod.lst[[i]] <- randomForest(
-    formula = TEMPERATURE ~ DEPTH + Aream2 + AvgSummTemp_C + EcoRegion,
-    data = Train.BT.df1[,pred.vars],
+  TP.rf.mod.lst[[i]] <- randomForest(
+    formula = avgTP_mugL ~ .,
+    data = Train.TP.df1[,pred.vars],
     mtry = mtry.vec[i],
     ntree = 1000,
     importance = T,
@@ -61,7 +64,7 @@ for (i in 1:length(mtry.vec)){
   )
   
   # Temporary dataframe
-  tmp.rf.mod <- data.frame(predicted = BT.rf.mod.lst[[i]]$predicted,y = BT.rf.mod.lst[[i]]$y)
+  tmp.rf.mod <- data.frame(predicted = TP.rf.mod.lst[[i]]$predicted,y = TP.rf.mod.lst[[i]]$y)
   
   # Coefficient of determination
   tmp.R2 <- VarExp(tmp.rf.mod$predicted, tmp.rf.mod$y) 
@@ -75,7 +78,7 @@ for (i in 1:length(mtry.vec)){
   # RMSE
   tmp.rmse <- sqrt(mean((tmp.rf.mod$y - tmp.rf.mod$predicted)^2))
   
-  BT.rf.mod.per <- rbind(BT.rf.mod.per,
+  TP.rf.mod.per <- rbind(TP.rf.mod.per,
                          data.frame(mtry = mtry.vec[i],
                                     R2 = tmp.R2,
                                     r2 = tmp.r2,
@@ -83,35 +86,35 @@ for (i in 1:length(mtry.vec)){
                                     rmse = tmp.rmse))
 }
 
-BT.rf.mod.per
+TP.rf.mod.per
 
-#Note: We select 1000 trees and mtry value of 3 for the BT RF model.
+#Note: We select 1000 trees and mtry value of 5 for the TP RF model.
 
 # Final model----
-set.seed(125)
+set.seed(329)
 
-## Developing the model again
-BT.rf.mod1 <- randomForest(
-  formula = TEMPERATURE ~ DEPTH + Aream2 + AvgSummTemp_C + EcoRegion,
-  data = Train.BT.df1[,pred.vars],
-  mtry = 3,
+# Developing the model again
+TP.rf.mod1 <- randomForest(
+  formula = avgTP_mugL ~ .,
+  data = Train.TP.df1[,pred.vars],
+  mtry = 5,
   ntree = 1000,
   importance = T,
   do.trace = 100,
   nodesize = 10
 )
 
-BT.rf.mod1
+TP.rf.mod1
 
 # Cross-validation----
 ## number of folds
 k <- 4
 
 ## set seed
-set.seed(600)
+set.seed(150)
 
 ## Create k-fold cross-validation indices
-folds <- createFolds(Train.BT.df1$TEMPERATURE, k = k, list = TRUE, returnTrain = TRUE)
+folds <- createFolds(Train.TP.df1$avgTP_mugL , k = k, list = TRUE, returnTrain = TRUE)
 
 ## Model predictions
 pred_list_mtry <- list()
@@ -124,12 +127,15 @@ for (j in 1:length(mtry.vec)){
     tmp.Train.indices <- folds[[i]]
     
     # Train and test data
-    tmp.Train.df <- Train.BT.df1[tmp.Train.indices,]
-    tmp.Test.df <- Train.BT.df1[-tmp.Train.indices,]
+    tmp.Train.df <- Train.TP.df1[tmp.Train.indices,]
+    tmp.Test.df <- Train.TP.df1[-tmp.Train.indices,]
+    
+    # set seed
+    set.seed(329)
     
     # Modeling training
     tmp.rf.mod <- randomForest(
-      formula = TEMPERATURE ~ DEPTH + Aream2 + AvgSummTemp_C + EcoRegion,
+      formula = avgTP_mugL ~ .,
       data = tmp.Train.df[,pred.vars],
       mtry = mtry.vec[j],
       ntree = 1000,
@@ -150,61 +156,61 @@ for (j in 1:length(mtry.vec)){
 }
 
 ## List to store model results for different mtry values
-BT.mod.holdouts.lst <- list()
+TP.mod.holdouts.lst <- list()
 
 
 ## Loop to pull all the predicted data in the holdout folds for a given mtry value
 for (j in 1:length(mtry.vec)){
   
   # temporary data frame
-  BT.mod.holdouts.mtry <- data.frame()
+  TP.mod.holdouts.mtry <- data.frame()
   
   for (i in 1:k){
     # Adding to the data frame
-    BT.mod.holdouts.mtry <- rbind(BT.mod.holdouts.mtry,
+    TP.mod.holdouts.mtry <- rbind(TP.mod.holdouts.mtry,
                                   pred_list_mtry[[j]][[i]]$holdout.fold.df )
   }
   
-  BT.mod.holdouts.lst[[j]] <- BT.mod.holdouts.mtry
+  TP.mod.holdouts.lst[[j]] <- TP.mod.holdouts.mtry
 }
 
 ### check
-#### for mtry == 3
-VarExp(BT.mod.holdouts.lst[[2]]$predicted,
-       BT.mod.holdouts.lst[[2]]$TEMPERATURE)
+#### for mtry == 5
+VarExp(TP.mod.holdouts.lst[[3]]$predicted,
+       TP.mod.holdouts.lst[[3]]$avgTP_mugL )
+
 
 # Model performance----
 ## Training phase
 ### Coefficient of determination
-Train.BT.df.per <- cbind(Train.BT.df1, pred.BT_C = BT.rf.mod1$predicted)
-VarExp(Train.BT.df.per$pred.BT_C , Train.BT.df.per$TEMPERATURE ) 
+Train.TP.df.per <- cbind(Train.TP.df1, log.pred.avgTP_mugL = TP.rf.mod1$predicted)
+VarExp(Train.TP.df.per$log.pred.avgTP_mugL , Train.TP.df.per$avgTP_mugL )
 
 ### RMSE
-sqrt(mean((Train.BT.df.per$pred.BT_C - Train.BT.df.per$TEMPERATURE)^2))
+sqrt(mean((Train.TP.df.per$log.pred.avgTP_mugL - Train.TP.df.per$avgTP_mugL)^2))
 
 ## Cross-validation
 ### dataframe to store cross-validation results
-BT.rf.mod.per.CV <- data.frame()
+TP.rf.mod.per.CV <- data.frame()
 
 # model perfomance
 for (j in 1:length(mtry.vec)){
-  
   # temp. dataframe
-  tmp.df <- BT.mod.holdouts.lst[[j]]
+  tmp.df <- TP.mod.holdouts.lst[[j]]
   
   # Performance metrics
   ## Coefficient of determination
   
-  tmp.R2 <- VarExp(tmp.df$predicted , tmp.df$TEMPERATURE ) 
+  tmp.R2 <- VarExp(tmp.df$predicted , tmp.df$avgTP_mugL ) 
   
   ## Correlation coefficient
-  tmp.cor <- cor(tmp.df$predicted , tmp.df$TEMPERATURE)
+  tmp.cor <- cor(tmp.df$predicted , tmp.df$avgTP_mugL)
   
   ## MSE
-  tmp.mse <- mean((tmp.df$predicted  - tmp.df$TEMPERATURE)^2) 
+  tmp.mse <- mean((tmp.df$predicted  - tmp.df$avgTP_mugL)^2) 
   
   # RMSE
-  tmp.rmse <- sqrt(mean((tmp.df$TEMPERATURE - tmp.df$predicted)^2)) 
+  tmp.rmse <- sqrt(mean((tmp.df$avgTP_mugL - tmp.df$predicted)^2)) 
   
   tmp.per.df <- data.frame(mtry = mtry.vec[j],
                            R2 = tmp.R2,
@@ -212,28 +218,11 @@ for (j in 1:length(mtry.vec)){
                            mse = tmp.mse,
                            rmse = tmp.rmse)
   
-  BT.rf.mod.per.CV <- rbind(BT.rf.mod.per.CV,
+  TP.rf.mod.per.CV <- rbind(TP.rf.mod.per.CV,
                             tmp.per.df)
 }
 
-BT.rf.mod.per.CV
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+TP.rf.mod.per.CV
 
 
 
