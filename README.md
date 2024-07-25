@@ -80,5 +80,56 @@ For detailed guides and additional resources on installing and using R and RStud
 These guides provide comprehensive instructions and helpful visuals to ensure a smooth installation process.
 
 ## Running Codes
+Here's a step-by-step guide to how to the codes given here in RStudio:
+
+### Forking a GitHub Repository
+
+1. **Log in to GitHub:**
+   - Go to [GitHub](https://github.com) and log in to your account.
+
+2. **Find the Repository:**
+   - Navigate to the repository you want to fork. You can use the search bar at the top of the GitHub page.
+
+3. **Fork the Repository:**
+   - In the upper right-hand corner of the repository page, click the `Fork` button. This will create a copy of the repository under your GitHub account.
+
+4. **Clone the Forked Repository:**
+   - Go to your GitHub profile and find the forked repository.
+   - Click on the `Code` button and copy the URL (HTTPS, SSH, or GitHub CLI) of the repository.
+
+### Cloning the Repository in RStudio
+
+1. **Open RStudio:**
+   - Launch RStudio on your computer.
+
+2. **Create a New Project:**
+   - Go to the `File` menu, select `New Project`, then choose `Version Control`, and then `Git`.
+
+3. **Clone the Repository:**
+   - In the `Repository URL` field, paste the URL you copied from GitHub.
+   - Choose a directory where you want to store the project locally.
+   - Click `Create Project`. RStudio will clone the repository and open it as a new project.
+
+### Running the Code in RStudio
+
+1. **Explore the Project:**
+   - In the `Files` pane of RStudio, you can see all the files in the cloned repository.
+
+2. **Open Scripts:**
+   - Double-click on any R script (`.R` file) to open it in the `Source` pane.
+
+3. **Install Required Packages:**
+   - If the project depends on specific R packages, install them using `install.packages("packageName")`.
+   - You can find a list of required packages within the script itself (usually at the top in the form of `my_packages <- c(packageName,...)`).
+
+4. **Run the Code:**
+   - You can run the entire script by clicking the `Source` button or by selecting `Code` > `Run Region` > `Run All`.
+   - Alternatively, you can run line by line by selecting the line and pressing `Ctrl+Enter` (Windows/Linux) or `Cmd+Enter` (Mac).
+
+### Additional Resources
+For further details, refer to these resources:
+- [GitHub Docs: Fork a repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+- [RStudio Support: Version Control with Git and SVN](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN)
+- [Happy Git and GitHub for the useR](https://happygitwithr.com/) - A comprehensive guide on using Git with R.
 
 
