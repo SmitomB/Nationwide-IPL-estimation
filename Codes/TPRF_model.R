@@ -1,4 +1,4 @@
-# Title: Randomforest model for total phosphorus prediction
+# Title: Random forest model for total phosphorus prediction
 
 # Description----
 # Here we provide the codes to develop the regression random forest model for total phosphorus prediction.

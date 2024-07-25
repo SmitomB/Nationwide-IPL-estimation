@@ -1,4 +1,4 @@
-# Title: Randomforest model for bottom temperature prediction
+# Title: Random forest model for bottom temperature prediction
 
 # Description----
 # Here we provide the codes to develop the regression random forest model for bottom temperature prediction.
