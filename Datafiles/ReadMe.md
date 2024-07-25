@@ -8,6 +8,7 @@ This repository contains several data files used for modeling. Below is a list o
 | `BTRF_model.RDS`   | Random forest model for BT                                |
 | `IPL_obs.RDS`      | Predictors for MER model                                  |
 | `MER_model.RDS`    | MER model for IPL flux                                    |
+| `Predicted Data.xlsx` | Final predicted values of BT, TP and IPL for all large lakes |
 | `TP.predictors.RDS`| Predictors for TP model                                   |
 | `TPRF_model.RDS`   | Random forest model for TP                                |
 | `lakes.sp.df.RDS`  | Predictors for nationwide BT, TP, and IPL flux prediction |
