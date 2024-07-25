@@ -9,5 +9,4 @@ This repository contains several script files used for modeling. Below is a list
 | `MER_model.R`       | Script for MER model               |
 | `TPRF_model.R`      | Script for TP RF model              |
 
-For more details, refer to the individual file descriptions or the main documentation.
 
