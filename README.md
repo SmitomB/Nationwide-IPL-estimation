@@ -1,6 +1,11 @@
-# Nationwide-IPL-estimation
-This repository contains data and codes used to estimate the IPL fluxes across the contiguous US
+<h1 align="center">Quantifying Internal Phosphorus Loading in Large Lakes and Reservoirs across the United States</h1>
 
+<p align="center">
+  <strong>Smitom S. Borah</strong>
+  <strong>Natalie G. Nelson</strong>
+  <strong>Owen W. Duckworth</strong>
+  <strong> Daniel R. Obenour</strong>
+</p>
 # Project Title
 
 A brief description of what this project does and who it's for.
