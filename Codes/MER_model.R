@@ -1,7 +1,7 @@
 # Title: Mixed effects model for IPL flux estimation
 
 # Description----
-# Here we provide the codes to develop the regression model for IPL flux prediction
+# Here we provide the codes to develop the regression model for IPL flux prediction.
 
 # Loading pacakages----
 my_packages <- c("tidyverse", "readxl", "leaps", "relaimpo", "psych", "lme4", "Hmisc", "merTools")
