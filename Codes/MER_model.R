@@ -49,3 +49,55 @@ VarExp(dat.MLdf$pred.ln.IPL.re, dat.MLdf$ln.IPL) # with random effects
 ### RMSE
 sqrt(mean((dat.MLdf$ln.IPL - dat.MLdf$pred.ln.IPL)^2)) # without random effects
 sqrt(mean((dat.MLdf$ln.IPL - dat.MLdf$pred.ln.IPL.re)^2)) # without random effects
+
+
+## 10-fold cross-validation
+### Redefining the obs dataset
+dat.cvMLdf <- dat
+
+### number of lakes per fold
+lakes_p_folds <- length(unique(dat.cvMLdf$lagoslakei))/10
+
+### splitting the dataset into 10 folds
+train.lakes <- split(unique(dat.cvMLdf$lagoslakei), ceiling(seq_along(unique(dat.cvMLdf$lagoslakei))/lakes_p_folds))
+
+### data frame to store test data
+testdat.cvMLdf <- data.frame()
+
+for(i in 1:length(train.lakes)){
+  # training dataset
+  train.df <- dat.cvMLdf[which(!dat.cvMLdf$lagoslakei %in% train.lakes[[i]]),]
+  
+  # testing dataset
+  test.df <- dat.cvMLdf[which(dat.cvMLdf$lagoslakei %in% train.lakes[[i]]),]
+  
+  # developing a model
+  # Multilevel linear regression model
+  LMMmod.temp <- lmer(log(IPL_flux)~ 1 + log(Depth_m)+ log(Area_m2) +  log(TP_mgL) + log(Temp_C) + (1|lagoslakei), data = train.df)
+  
+  # Predicting the test data
+  test.df <- test.df %>% 
+    mutate(pred.ln.IPL = predict(LMMmod.temp, re.form = NA ,newdata = .), # without random effects
+           ln.IPL = log(IPL_flux)) # observed data in log scale
+  
+  test.df <- test.df %>% mutate(Fold = rep(paste0("fold",i)))
+  
+  testdat.cvMLdf <- rbind(testdat.cvMLdf, test.df)
+}
+
+### Coefficient of determination
+VarExp(testdat.cvMLdf$pred.ln.IPL, testdat.cvMLdf$ln.IPL) # without random effects
+
+### RMSE calculation
+sqrt(mean((testdat.cvMLdf$ln.IPL - testdat.cvMLdf$pred.ln.IPL)^2)) # without random effects
+
+
+
+
+
+
+
+
+
+
+
