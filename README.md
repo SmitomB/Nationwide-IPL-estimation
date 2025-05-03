@@ -1,13 +1,13 @@
-<h1 align="center">Quantifying Internal Phosphorus Loading in Large Lakes and Reservoirs across the United States</h1>
+<h1 align="center">Quantifying Summer Internal Phosphorus Loading in Large Lakes across the United States</h1>
 
 <p align="center">
   <strong>Smitom S. Borah<sup>1</sup>, Natalie G. Nelson<sup>2</sup>, Owen W. Duckworth<sup>3</sup></strong> , Daniel R. Obenour<sup>1</sup></strong>
 </p>
 
 <p align="center">
-  <sup>1</sup>Department of Civil, Construction, and Environmental Engineering, North Carolina State University, Raleigh, 27606, USA<br>
+  <sup>1</sup>Department of Civil, Construction, and Environmental Engineering, North Carolina State University, Raleigh, NC, 27606, USA<br>
   <sup>2</sup>Biological and Agricultural Engineering, North Carolina State University, Raleigh, NC, 27606, USA<br>
-  <sup>3</sup>Department of Crop and Soil Sciences, North Carolina State University, Raleigh, 27606, USA
+  <sup>3</sup>Department of Crop and Soil Sciences, North Carolina State University, Raleigh, NC, 27606, USA
 </p>
 
 
